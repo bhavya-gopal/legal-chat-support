@@ -101,7 +101,7 @@ function ChatInterface({ disclaimerData, scenarioData }) {
   }
 
   const remainingMessages = MAX_MESSAGES - userMessageCount
-  const surveyUrl = import.meta.env.VITE_SURVEY_URL || 'https://example.com/survey'
+  const surveyUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSevPPyOxytVlHgEYo9IbuMlLCN5RplR8GYgjjHLUwlRDpoElg/viewform' // Update this with your actual survey URL
 
   return (
     <div className="chat-interface">
