@@ -2,6 +2,8 @@
 
 ## 🚀 Quick Start - Deploy to GitHub Pages
 
+> 💡 **Tip**: For automatic deployments with GitHub Secrets, see **[GITHUB_SECRETS_SETUP.md](./GITHUB_SECRETS_SETUP.md)** instead.
+
 ### Step 1: Create GitHub Repository
 
 1. Go to [github.com](https://github.com) and create a new repository

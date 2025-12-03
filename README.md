@@ -35,6 +35,7 @@ This will start:
 
 To deploy to GitHub Pages, see the deployment guides:
 - **[Quick Start Guide](./DEPLOY_QUICKSTART.md)** - Fast deployment instructions
+- **[GitHub Secrets Setup](./GITHUB_SECRETS_SETUP.md)** - Configure environment variables via GitHub Secrets ⭐ Recommended
 - **[Full Deployment Guide](./DEPLOYMENT.md)** - Detailed deployment with backend setup
 
 **Note:** GitHub Pages only serves static files, so your backend API will need to be deployed separately (see deployment guides for options).

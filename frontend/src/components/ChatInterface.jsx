@@ -3,7 +3,7 @@ import DisclaimerBanner from './DisclaimerBanner'
 import QuickStartPrompts from './QuickStartPrompts'
 import ChatMessages from './ChatMessages'
 import ChatInput from './ChatInput'
-import { getChatApiEndpoint } from '../config/api'
+import { sendChatMessage } from '../services/openai'
 import './ChatInterface.css'
 
 const MAX_MESSAGES = 5
@@ -42,25 +42,11 @@ function ChatInterface({ disclaimerData, scenarioData }) {
     setLoading(true)
 
     try {
-      const response = await fetch(getChatApiEndpoint(), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: messageText,
-          conversationHistory: conversationHistory.map(m => ({
-            role: m.role,
-            content: m.content
-          }))
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to get response')
-      }
-
-      const data = await response.json()
+      // Call OpenAI directly from frontend
+      const data = await sendChatMessage(messageText, conversationHistory.map(m => ({
+        role: m.role,
+        content: m.content
+      })))
 
       const aiMessage = {
         role: 'assistant',
@@ -86,12 +72,22 @@ function ChatInterface({ disclaimerData, scenarioData }) {
       }
     } catch (error) {
       console.error('Error sending message:', error)
-      const errorMessage = {
+      let errorMessage = {
         role: 'assistant',
         content: 'Sorry, I encountered an error. Please check your API key configuration and try again.',
         timestamp: new Date().toISOString(),
         error: true
       }
+      
+      // More specific error messages
+      if (error.message?.includes('API key')) {
+        errorMessage.content = 'API key error. Please check that VITE_OPENAI_API_KEY is set correctly.'
+      } else if (error.response?.status === 401) {
+        errorMessage.content = 'Authentication error. Please check your OpenAI API key.'
+      } else if (error.response?.status === 429) {
+        errorMessage.content = 'Rate limit exceeded. Please try again in a moment.'
+      }
+      
       setMessages(prev => [...prev, errorMessage])
       // Revert message count on error since the message failed
       setUserMessageCount(userMessageCount)
