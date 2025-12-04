@@ -15,7 +15,7 @@ function QuickStartPrompts({ onSelect, disabled = false, compact = false }) {
       {!compact && (
         <div className="quick-start-header">
           <h2>Get Started</h2>
-          <p>Choose a topic to begin, or type your own question below</p>
+          <p>Choose a topic to learn more</p>
         </div>
       )}
       <div className={`quick-start-grid ${compact ? 'compact-grid' : ''}`}>
